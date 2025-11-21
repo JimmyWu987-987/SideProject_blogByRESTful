@@ -26,13 +26,21 @@ public class PostController {
 	@Autowired
 	PostService postSvc;
 	
-	
+	// ============= 查詢全部文章 =============
 	@GetMapping
 	public Page<PostVO> getAllPosts(Pageable pageable) {
 		// Pageable 自動從 URL 參數，分析出分頁和排序資料
 		// 參數名預設是 page 和 size
 		
 		return postSvc.getAllByPage(pageable);
+	}
+	// ============= 查詢單一文章（依照文章編號） =============
+	@GetMapping("/{id}")
+	public PostVO getOnePost(@PathVariable("id") Integer postId) {
+		
+		PostVO postVO = postSvc.getOneByPostId(postId);
+		
+		return postVO;
 	}
 	
 	// 使用 ResponseEntity 包裝做回傳

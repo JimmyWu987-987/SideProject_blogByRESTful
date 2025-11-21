@@ -46,8 +46,12 @@ public class PostService {
 		}
 		
 		// 確保更新的文章保留原作者 ID (防止客戶端篡改 authorId)
-		postVO.setUserId(existingPost.getUserId());
 		
+		postVO.setUserId(existingPost.getUserId());
+		postVO.setOnAndOff(existingPost.getOnAndOff());
+		postVO.setPostImagesVO(existingPost.getPostImagesVO());
+		
+		postVO.setCreateTime(existingPost.getCreateTime());
 		// 設定最後更新時間
 		postVO.setLastUpdateTime(LocalDateTime.now());
 		
@@ -93,6 +97,6 @@ public class PostService {
 
 	public PostVO getOneByPostId(Integer postId) {
 		Optional<PostVO> optional = repository.findById(postId);
-		return optional.orElseThrow(); // The else is NoSuchElementException.
+		return optional.orElseThrow(() -> new IllegalArgumentException("文章ID不存在！ID編號：" + postId)); // The else is NoSuchElementException.
 	}
 }
