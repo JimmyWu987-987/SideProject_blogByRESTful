@@ -25,8 +25,8 @@ public class PostVO implements java.io.Serializable{
 	private LocalDateTime createTime;	// 文章建立時間	
 	private LocalDateTime lastUpdateTime; // 文章最後修改的時間
 	private Byte onAndOff; // 文章上下架狀態（0: 下架; 1: 上架）
-	@OneToMany(mappedBy = "PostVO")
-	private List<PostImagesVO> postImagesVO; 	// 文章照片
+	// @OneToMany(mappedBy = "PostVO")
+	// private List<PostImagesVO> postImagesVO; 	// 文章照片
 	
 	// 未來會增加先備註
 	// 文章分類

@@ -65,14 +65,13 @@ public class PostController {
 							 Authentication authentication) {
 		
 		// 1. 從 Spring Security 獲取當前用戶 ID
-		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-		Integer userId = customUserDetails.getUserId();
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
 		// 2. 為了安全性，確保傳入的 PostVO ID 與 PathVariable 相同
 		postVO.setPostId(postId);
 		
 		// 3. 在 Service 層處理：確保只有文章作者才能修改
-        postSvc.updatePost(postVO, userId);
+        postSvc.updatePost(postVO, userDetails);
 		
 		return postVO;
 	}
@@ -82,11 +81,10 @@ public class PostController {
 	public String deletePost(@PathVariable("id") Integer postId,
 							 Authentication authentication) {
 		// 1. 從 Spring Security 獲取當前用戶 ID
-		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-		Integer userId = customUserDetails.getUserId();
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		
-		// 2. 在 Service 層處理：確保只有文章作者才能刪除
-        postSvc.deletePost(postId, userId);
+		// 2. 在 Service 層處理：確保只有文章作者與管理員才能刪除
+        postSvc.deletePost(postId, userDetails);
 		
 		return "文章編號：" + postId + " 刪除成功";
 	}

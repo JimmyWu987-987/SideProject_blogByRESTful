@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections; // 用於返回空的權限列表
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
@@ -37,12 +38,17 @@ public class CustomUserDetails implements UserDetails {
 	}
     
     // ----------------------------------------------------
-	// 權限方法 (未來實作)
+	// 權限方法
 	// ----------------------------------------------------
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO: 在實作權限/角色時，這裡需要返回該用戶的權限列表
-		return Collections.emptyList(); // 暫時返回空列表
+		// 將資料庫的 role 字串 (e.g., "ROLE_ROOT") 轉為 Spring Security 的權限物件
+		return Collections.singletonList(new SimpleGrantedAuthority(userVO.getRole()));
+	}
+	
+	// 讓 Service 層判斷是否為 Root
+	public boolean isRoot() {
+		return "ROLE_ROOT".equals(userVO.getRole());
 	}
 
 	// ----------------------------------------------------

@@ -42,6 +42,8 @@ public class UserService {
 		userVO.setBirthday(regUserDTO.getBirthday());
 		// 依照伺服器的時間為註冊時間
 		userVO.setRegTime(LocalDateTime.now());
+		// 預設註冊皆為一般使用者
+		userVO.setRole("ROLE_USER");
 		
 		// 儲存至 DB
 		repository.save(userVO);

@@ -42,5 +42,11 @@ public class UserVO implements java.io.Serializable {
 	private LocalDate birthday; // 生日
 	private LocalDateTime regTime; // 註冊時間
 	private LocalDateTime lastLoginTime; // 最後登入時間
+	
+	// 角色權限
+	// 一般使用者的命名為「ROLE_USER」
+	// 最高權限管理者為「ROLE_ROOT」
+	@Column(nullable = false)
+	private String role; 
 
 }

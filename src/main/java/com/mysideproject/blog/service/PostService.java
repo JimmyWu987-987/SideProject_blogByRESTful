@@ -1,7 +1,6 @@
 package com.mysideproject.blog.service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import com.mysideproject.blog.Repository.PostRepository;
+import com.mysideproject.blog.model.CustomUserDetails;
 import com.mysideproject.blog.model.PostVO;
 
 @Service("postService")
@@ -30,7 +30,7 @@ public class PostService {
 		repository.save(postVO);
 	}
 
-	public void updatePost(PostVO postVO, Integer userId) {
+	public void updatePost(PostVO postVO, CustomUserDetails userDetails) {
 		
 		Optional<PostVO> optional = repository.findById(postVO.getPostId());
 		
@@ -39,9 +39,15 @@ public class PostService {
 		}
 		
 		PostVO existingPost = optional.get();
+		Integer userId = userDetails.getUserId();
 		
-		// 確認文章作者是否為當前登入用戶
-		if(!existingPost.getUserId().equals(userId)) {
+		
+		// 檢查是否為作者本人或者管理員
+		boolean isAuther = existingPost.getUserId().equals(userId);
+		boolean isRoot = userDetails.isRoot();
+		
+		// 確認當前登入用戶是否為作者本人還是管理者
+		if(!isAuther && !isRoot) {
 			throw new AccessDeniedException("您沒有權限修改這篇文章 (ID: " + postVO.getPostId() + ")，因為您不是作者。");
 		}
 		
@@ -49,7 +55,7 @@ public class PostService {
 		
 		postVO.setUserId(existingPost.getUserId());
 		postVO.setOnAndOff(existingPost.getOnAndOff());
-		postVO.setPostImagesVO(existingPost.getPostImagesVO());
+		// postVO.setPostImagesVO(existingPost.getPostImagesVO());
 		
 		postVO.setCreateTime(existingPost.getCreateTime());
 		// 設定最後更新時間
@@ -59,7 +65,7 @@ public class PostService {
 		repository.save(postVO);
 	}
 
-	public void deletePost(Integer postId, Integer userId) {
+	public void deletePost(Integer postId, CustomUserDetails userDetails) {
 		
 		Optional<PostVO> optional = repository.findById(postId);
 		
@@ -68,10 +74,15 @@ public class PostService {
         }
 		
 		PostVO existingPost = optional.get();
+		Integer userId = userDetails.getUserId();
 		
-		// 確認文章作者是否為當前登入用戶
-		if(!existingPost.getUserId().equals(userId)) {
-			throw new AccessDeniedException("您沒有權限修改這篇文章 (ID: " + postId + ")，因為您不是作者。");
+		// 檢查是否為作者本人或者管理員
+		boolean isAuther = existingPost.getUserId().equals(userId);
+		boolean isRoot = userDetails.isRoot();
+		
+		// 確認當前登入用戶是否為作者本人還是管理者
+		if(!isAuther && !isRoot) {
+			throw new AccessDeniedException("您沒有權限刪除這篇文章 (ID: " + postId + ")，因為您不是作者。");
 		}
 		
 		// 刪除文章
