@@ -44,10 +44,11 @@ public class PostService {
 		
 		// 檢查是否為作者本人或者管理員
 		boolean isAuther = existingPost.getUserId().equals(userId);
-		boolean isRoot = userDetails.isRoot();
+		// boolean isRoot = userDetails.isRoot();
 		
-		// 確認當前登入用戶是否為作者本人還是管理者
-		if(!isAuther && !isRoot) {
+		// 確認當前登入用戶是否為作者本人
+		// 管理員不能修改文章內容
+		if(!isAuther) {
 			throw new AccessDeniedException("您沒有權限修改這篇文章 (ID: " + postVO.getPostId() + ")，因為您不是作者。");
 		}
 		
