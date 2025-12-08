@@ -20,6 +20,8 @@ import com.mysideproject.blog.jwt.JwtUtils;
 import com.mysideproject.blog.model.CustomUserDetails;
 import com.mysideproject.blog.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -38,7 +40,10 @@ public class AuthController {
 	
 	// 註冊新會員的請求
 	@PostMapping("/signup")
-	public ResponseEntity<String> registerUser(@RequestBody RegUserDTO regUserDTO){
+	public ResponseEntity<String> registerUser(
+			@RequestBody
+			@Valid
+			RegUserDTO regUserDTO){
 		
 		try {
 			
