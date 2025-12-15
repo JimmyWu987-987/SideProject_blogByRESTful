@@ -84,6 +84,12 @@ public class AuthController {
         				)
         );
         
+        try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
         // 2. 驗證成功後，將 Authentication 物件放入 SecurityContext 中
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
