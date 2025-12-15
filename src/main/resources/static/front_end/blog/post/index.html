@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>部落格文章列表</title>
+    <style>
+        /* 簡單的 CSS 美化 */
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
+        .post-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .post-title { color: #333; margin-top: 0; }
+        .post-meta { color: #888; font-size: 0.9em; margin-bottom: 10px; }
+        .post-content { line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <h1>最新文章</h1>
+    
+    <div id="posts-container">
+        <p>載入中...</p>
+    </div>
+
+    <script src="/js/blog/postIndex.js"></script>
+</body>
+</html>
