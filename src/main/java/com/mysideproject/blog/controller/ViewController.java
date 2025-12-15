@@ -8,7 +8,7 @@ public class ViewController {
 	
 	@GetMapping("/blog/posts")
 	public String showPostListPage() {
-		return "forward:/front_end/blog/post/index.html";
+		return "forward:/front_end/blog/post/searchAllPost.html";
 	}
 
 }
