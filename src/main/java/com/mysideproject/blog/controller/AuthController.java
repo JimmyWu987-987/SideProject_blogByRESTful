@@ -64,7 +64,10 @@ public class AuthController {
 	
 	// 登入的請求
 	@PostMapping("/signin")
-	public ResponseEntity<JwtResponse> authenticateUser(@RequestBody LoginRequestDTO loginRequest) {
+	public ResponseEntity<JwtResponse> authenticateUser(
+			@RequestBody
+			@Valid
+			LoginRequestDTO loginRequest) {
 		
 		// 1. 創建一個包含使用者帳號和密碼的物件 (使用 Spring Security 的 UsernamePasswordAuthenticationToken)
 		
