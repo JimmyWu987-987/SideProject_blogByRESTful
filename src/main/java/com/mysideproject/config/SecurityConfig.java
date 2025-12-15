@@ -70,7 +70,13 @@ public class SecurityConfig {
                     .requestMatchers("/v3/api-docs/**").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()
                     .requestMatchers("/swagger-ui.html").permitAll()
-                    // =================================================
+                    // ========== 新增：放行前端頁面與靜態資源 ==========
+                    .requestMatchers("/front_end/**").permitAll()
+                    .requestMatchers("/js/**").permitAll()
+                    .requestMatchers("/css/**").permitAll()
+                    .requestMatchers("/images/**").permitAll()
+                    // ========== 新增：放行 PageController 請求 ==========
+                    .requestMatchers("/blog/posts").permitAll()
 					
 					// 除了上述特定的請求，所有請求都需要身份驗證
 					.anyRequest().authenticated()
