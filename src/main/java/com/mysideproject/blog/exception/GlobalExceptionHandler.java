@@ -29,6 +29,9 @@ public class GlobalExceptionHandler {
 	}
 
 	// 攔截登入失敗 (帳號不存在或密碼錯誤)
+	// BadCredentials: 回傳 401，訊息：「帳號或密碼錯誤」。(外部錯誤)
+	// InternalAuthenticationService: 回傳 500，訊息：「系統忙碌中，請稍後再試」。(內部錯誤)
+	// 使用者登入的時候，錯誤(401)是或是內部錯誤(500)，統一由這個例外處理。
 	@ExceptionHandler({ BadCredentialsException.class, InternalAuthenticationServiceException.class })
 	public ResponseEntity<String> handleAuthException(Exception e) {
 		// 為了安全性，通常不會明確說是「帳號錯」還是「密碼錯」，以免被駭客暴力猜測帳號

@@ -78,6 +78,7 @@ public class AuthController {
                 // ----------------------------------------------------
                 // TODO: 請填入正確的 Spring Security 驗證 Token 類別
                 // ----------------------------------------------------
+        		// 若失敗，這裡會直接拋出 BadCredentialsException，跳去 GlobalExceptionHandler
         		new UsernamePasswordAuthenticationToken(
         				loginRequest.getUsername(),
         				loginRequest.getPassword()
